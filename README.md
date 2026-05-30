@@ -76,6 +76,20 @@ pip install -r DCIts\requirements.txt
 pip install -r Interpretable-Deep-Learning-Time-Series\requirements.txt
 ```
 
+### CUDA
+
+The pipelines use `--device auto` by default. If PyTorch sees a CUDA-capable GPU, DCIts will use CUDA; otherwise it falls back to CPU. You can also force CPU explicitly with `--device cpu`.
+
+CUDA is not pinned in `requirements.txt`, because the correct PyTorch build depends on the operating system, driver, GPU, and CUDA version. For GPU runs, install PyTorch using the official selector:
+
+https://pytorch.org/get-started/locally/
+
+Then check the environment:
+
+```powershell
+python -c "import torch; print(torch.__version__); print(torch.cuda.is_available())"
+```
+
 Copy this repository's experiment folder into the DCIts examples folder:
 
 ```powershell

@@ -1,9 +1,18 @@
+# Extra packages used by the thesis pipelines and notebooks.
+# Install the official DCIts requirements first.
+#
+# PyTorch is required by DCIts. CPU/CUDA builds depend on the machine,
+# so choose the PyTorch install command appropriate for your hardware.
+torch
+
 numpy
 scipy
 pandas
 matplotlib
 scikit-learn
 statsmodels
-torch
+
 jupyter
+jupyterlab
+notebook
 ipykernel
