@@ -82,22 +82,10 @@ For notebook use, also install Jupyter tools:
 pip install jupyterlab notebook ipykernel
 ```
 
-Remove any old copied experiment folder:
-
-```powershell
-Remove-Item -Recurse -Force .\DCIts\examples\synthetic_stability_experiments -ErrorAction SilentlyContinue
-```
-
-Copy this repository's experiment folder into the DCIts examples folder:
+## IMPORTANT: Copy this repository's experiment folder into the DCIts examples folder:
 
 ```powershell
 Copy-Item -Recurse -Force .\Interpretable-Deep-Learning-Time-Series\synthetic_stability_experiments .\DCIts\examples\synthetic_stability_experiments
-```
-
-After copying, run the files from:
-
-```text
-DCIts/examples/synthetic_stability_experiments/
 ```
 
 Copy the support version of `utils.py` into the DCIts source folder:
@@ -108,11 +96,8 @@ Copy-Item -Force .\Interpretable-Deep-Learning-Time-Series\dcits_support\src\uti
 
 The support file keeps the original DCIts utility interface, but also stores per-window `alpha`, `f`, and `C` sequences and MAE values needed by the thesis metrics.
 
-The notebooks should be opened from:
+The notebooks should be opened and run from `DCIts/examples/synthetic_stability_experiments/`.
 
-```text
-DCIts/examples/synthetic_stability_experiments/
-```
 
 ### CUDA
 
