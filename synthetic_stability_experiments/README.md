@@ -8,4 +8,4 @@ This folder contains the final synthetic experiments:
 
 Each pipeline has a matching JSON configuration file and writes CSV tables plus PDF figures.
 
-Use `komande.txt` for the exact command list used during development.
+Use `run_commands.txt` for the exact command list used during development.

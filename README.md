@@ -26,7 +26,7 @@ https://github.com/hc-xai/dcits
 |   |-- hidden_driver_analysis.ipynb
 |   |-- regime_change_analysis.ipynb
 |   |-- smooth_coefficient_analysis.ipynb
-|   `-- komande.txt
+|   `-- run_commands.txt
 |-- dcits_support/
 |   `-- src/utils.py
 |-- requirements.txt
@@ -67,7 +67,7 @@ The support file keeps the original DCIts utility interface, but also stores per
 The main commands are collected in:
 
 ```text
-synthetic_stability_experiments/komande.txt
+synthetic_stability_experiments/run_commands.txt
 ```
 
 Typical pipeline runs:
@@ -91,7 +91,7 @@ The experiment code records:
 - false positive summaries;
 - vector figures and CSV summaries.
 
-For full reproduction, use the same Python environment and run the commands from `komande.txt`.
+For full reproduction, use the same Python environment and run the commands from `run_commands.txt`.
 
 ## License
 
