@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+Seminar_venv/
+
+# Generated experiment outputs
+Rezultati/
+results/
+outputs/
+artifacts/
+_tmp*/
+tmp*/
+*.pkl
+*.npz
+*.pt
+*.pth
+
+# Large local data / exports
+*.zip
+*.7z
+*.rar
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
