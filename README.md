@@ -76,6 +76,12 @@ pip install -r DCIts\requirements.txt
 pip install -r Interpretable-Deep-Learning-Time-Series\requirements.txt
 ```
 
+For notebook use, also install Jupyter tools:
+
+```powershell
+pip install jupyterlab notebook ipykernel
+```
+
 ### CUDA
 
 The pipelines use `--device auto` by default. If PyTorch sees a CUDA-capable GPU, DCIts will use CUDA; otherwise it falls back to CPU. You can also force CPU explicitly with `--device cpu`.

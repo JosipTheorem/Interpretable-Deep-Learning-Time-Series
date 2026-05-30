@@ -1,4 +1,4 @@
-# Extra packages used by the thesis pipelines and notebooks.
+# Extra packages used by the thesis pipeline scripts.
 # Install the official DCIts requirements first.
 #
 # PyTorch is required by DCIts. CPU/CUDA builds depend on the machine,
@@ -11,8 +11,3 @@ pandas
 matplotlib
 scikit-learn
 statsmodels
-
-jupyter
-jupyterlab
-notebook
-ipykernel
