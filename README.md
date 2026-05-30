@@ -53,14 +53,6 @@ git clone https://github.com/hc-xai/dcits.git DCIts
 git clone https://github.com/JosipTheorem/Interpretable-Deep-Learning-Time-Series.git
 ```
 
-If this repository is hosted on GitLab instead of GitHub, replace the second clone command with:
-
-```powershell
-git clone <gitlab-repository-url> Interpretable-Deep-Learning-Time-Series
-```
-
-Keeping this folder name means the copy commands below work unchanged.
-
 Create and activate a Python environment. You can use either `venv` or `conda`.
 
 Example with `venv`:
@@ -120,10 +112,18 @@ The scripts save outputs as CSV tables and PDF figures. Large generated result f
 
 ## Running Notebooks
 
-After the setup and copy steps, start Jupyter from the same environment:
+After the setup and copy steps, start Jupyter from the same environment.
+
+With classic Jupyter Notebook:
 
 ```powershell
 jupyter notebook DCIts\examples\synthetic_stability_experiments
+```
+
+With JupyterLab:
+
+```powershell
+jupyter lab DCIts\examples\synthetic_stability_experiments
 ```
 
 Open one of:
@@ -135,15 +135,6 @@ smooth_coefficient_analysis.ipynb
 ```
 
 The notebooks expect to live inside `DCIts/examples/synthetic_stability_experiments/`, because they add `../..` to `sys.path` to import `src.utils`.
-
-## GitLab
-
-The project does not depend on GitHub-specific functionality. For GitLab submission:
-
-1. Import or push this repository to GitLab.
-2. Keep the same folder structure.
-3. Replace the thesis repository clone URL in the setup commands with the GitLab URL.
-4. Keep `LICENSE` and `THIRD_PARTY.md`, because the experiments build on DCIts.
 
 ## Reproducibility
 
