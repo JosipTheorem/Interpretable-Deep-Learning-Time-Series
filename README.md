@@ -36,31 +36,61 @@ https://github.com/hc-xai/dcits
 
 ## Setup
 
-Clone the original DCIts repository:
+This repository does not vendor the full DCIts source code. Use it together with a local clone of the official DCIts repository.
+
+Recommended folder layout:
+
+```text
+workspace/
+|-- DCIts/
+`-- Interpretable-Deep-Learning-Time-Series/
+```
+
+From an empty workspace folder, clone both repositories:
 
 ```powershell
 git clone https://github.com/hc-xai/dcits.git DCIts
+git clone https://github.com/JosipTheorem/Interpretable-Deep-Learning-Time-Series.git
 ```
 
-Create and activate a Python environment, then install the required packages:
+Create and activate a Python environment. You can use either `venv` or `conda`.
+
+Example with `venv`:
 
 ```powershell
-pip install -r requirements.txt
+python -m venv .venv
+.\.venv\Scripts\activate
 ```
 
-Copy the thesis experiment folder into the DCIts examples folder:
+Example with `conda`:
 
 ```powershell
-Copy-Item -Recurse -Force .\synthetic_stability_experiments .\DCIts\examples\synthetic_stability_experiments
+conda create -n dcits-thesis python=3.10
+conda activate dcits-thesis
+```
+
+Install DCIts dependencies using the official DCIts instructions or its `requirements.txt`, then install the extra packages used by these thesis scripts:
+
+```powershell
+pip install -r DCIts\requirements.txt
+pip install -r Interpretable-Deep-Learning-Time-Series\requirements.txt
+```
+
+Copy this repository's experiment folder into the DCIts examples folder:
+
+```powershell
+Copy-Item -Recurse -Force .\Interpretable-Deep-Learning-Time-Series\synthetic_stability_experiments .\DCIts\examples\synthetic_stability_experiments
 ```
 
 Copy the support version of `utils.py` into the DCIts source folder:
 
 ```powershell
-Copy-Item -Force .\dcits_support\src\utils.py .\DCIts\src\utils.py
+Copy-Item -Force .\Interpretable-Deep-Learning-Time-Series\dcits_support\src\utils.py .\DCIts\src\utils.py
 ```
 
 The support file keeps the original DCIts utility interface, but also stores per-window `alpha`, `f`, and `C` sequences and MAE values needed by the thesis metrics.
+
+After these copy steps, run the experiments from the `workspace/` folder so paths like `DCIts\examples\...` resolve correctly.
 
 ## Running Experiments
 
