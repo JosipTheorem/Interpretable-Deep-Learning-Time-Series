@@ -1,0 +1,313 @@
+
+python DCIts\examples\synthetic_stability_experiments\hidden_driver_pipeline.py --config DCIts\examples\synthetic_stability_experiments\hidden_driver_config.json
+
+python DCIts\examples\synthetic_stability_experiments\hidden_driver_pipeline.py --config DCIts\examples\synthetic_stability_experiments\hidden_driver_config.json --A-values 1.0 --P-values 200 --rho-values 0.3 --skip-control
+
+That means:
+read all default settings from hidden_driver_config.json
+replace only A_values, P_values, rho_values
+skip the A=0 control
+run only that one scenario
+
+... --output-dir "results\Test_single"
+
+
+
+results
+└── hidden_driver
+    ├── run_config.json
+    ├── summary_tables
+    │   ├── all_case_summary.csv
+    │   ├── all_stable_links.csv
+    │   └── all_lag_tables.csv
+    │
+    ├── main_sweep
+    │   ├── A_0p5_P_50_rho_0p0
+    │   │   ├── config.json
+    │   │   ├── generated_series.npz
+    │   │   ├── case_summary.csv
+    │   │   ├── time_series
+    │   │   │   ├── all_UXYZ.pdf
+    │   │   │   ├── U.pdf
+    │   │   │   ├── X.pdf
+    │   │   │   ├── Y.pdf
+    │   │   │   ├── Z.pdf
+    │   │   │   ├── XYZ.pdf
+    │   │   │   └── XYZ_without_seasonal.pdf
+    │   │   ├── comparison_heatmaps
+    │   │   │   ├── alpha_XYZ_all_cases.pdf
+    │   │   │   ├── focuser_XYZ_all_cases.pdf
+    │   │   │   └── coefficient_XYZ_all_cases.pdf
+    │   │   ├── observed_U
+    │   │   │   ├── training_results.pkl
+    │   │   │   ├── stable_links.csv
+    │   │   │   ├── lag_table.csv
+    │   │   │   ├── false_positives.csv
+    │   │   │   ├── alpha_heatmaps.pdf
+    │   │   │   ├── focuser_heatmaps.pdf
+    │   │   │   └── coefficient_heatmaps.pdf
+    │   │   ├── hidden_U
+    │   │   │   └── same files...
+    │   │   └── hidden_U_without_seasonal
+    │   │       └── same files...
+    │   ├── A_0p5_P_50_rho_0p3
+    │   └── ...
+    │
+    └── control_A0
+        ├── A_0p0_rho_0p0
+        ├── A_0p0_rho_0p3
+        └── A_0p0_rho_0p7
+
+
+
+
+python DCIts\examples\synthetic_stability_experiments\hidden_driver_pipeline.py --config DCIts\examples\synthetic_stability_experiments\hidden_driver_config.json --A-values 0.5,1.0,2.0 --P-values 200 --rho-values 0.3 --skip-control
+
+python DCIts\examples\synthetic_stability_experiments\hidden_driver_pipeline.py --config DCIts\examples\synthetic_stability_experiments\hidden_driver_config.json --A-values 1.0 --P-values 50,500 --rho-values 0.3 --skip-control
+
+python DCIts\examples\synthetic_stability_experiments\hidden_driver_pipeline.py --config DCIts\examples\synthetic_stability_experiments\hidden_driver_config.json --A-values 1.0 --P-values 200 --rho-values 0.0,0.7 --skip-control
+
+python DCIts\examples\synthetic_stability_experiments\hidden_driver_pipeline.py --config DCIts\examples\synthetic_stability_experiments\hidden_driver_config.json --only-control --rho-values 0.0,0.3,0.7
+
+python DCIts\examples\synthetic_stability_experiments\hidden_driver_pipeline.py --config DCIts\examples\synthetic_stability_experiments\hidden_driver_config.json --output-dir "results\hidden_driver_no_U_control" --only-control --rho-values 0.0 --sigma-U 0.0
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+TASK 2 / REGIME CHANGE PIPELINE
+
+python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json
+
+That means:
+read all default settings from regime_change_config.json
+run all B_values
+run all sigma_sets: low_snr and high_snr
+run default loss: mse
+save to:
+results\regime_change
+
+
+
+Quick test run:
+
+python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json --B-values 50:150 --sigma-set-names high_snr --n-runs 1 --ts-length 1000 --epochs 1 --output-dir "results\Test_task2_single"
+
+
+
+Run only high-SNR cases:
+
+python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json --sigma-set-names high_snr
+
+
+
+Run only low-SNR cases:
+
+python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json --sigma-set-names low_snr
+
+
+
+Run only PDF B values with high-SNR:
+
+python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json --B-values 25:75,50:150,100:300 --sigma-set-names high_snr
+
+
+
+Run only long-regime B case with high-SNR:
+
+python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json --B-values 50:2000 --sigma-set-names high_snr
+
+
+
+Run loss comparison on high-SNR:
+
+python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json --sigma-set-names high_snr --losses mse,huber,smooth_l1,mae
+
+
+
+Run longer training on high-SNR:
+
+python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json --sigma-set-names high_snr --epochs 300 --scheduler-patience 10 --early-stopping-modifier 3
+
+
+
+results
+└── regime_change
+    ├── run_config.json
+    ├── summary_tables
+    │   ├── all_case_summary.csv
+    │   ├── all_regime_metrics.csv
+    │   ├── all_lag_sign_metrics.csv
+    │   ├── all_link_tables.csv
+    │   └── all_classification_metrics.csv
+    │
+    ├── B_25_75
+    │   ├── sigma_low_snr
+    │   │   ├── generated_series.npz
+    │   │   ├── time_series
+    │   │   └── loss_mse
+    │   │       ├── config.json
+    │   │       ├── case_summary.csv
+    │   │       ├── source_change
+    │   │       ├── lag_change
+    │   │       └── sign_change
+    │   │
+    │   └── sigma_high_snr
+    │       └── same files...
+    │
+    ├── B_50_150
+    ├── B_100_300
+    └── B_50_2000
+
+
+
+Inside each case folder:
+
+source_change / lag_change / sign_change
+├── training_results.pkl
+├── metrics
+│   ├── prediction_metrics.csv
+│   ├── regime_metrics.csv
+│   ├── lag_sign_metrics.csv
+│   ├── link_table.csv
+│   └── false_positives.csv
+├── classification
+│   ├── classification_metrics.csv
+│   ├── confusion_matrix_majority_baseline.pdf
+│   ├── confusion_matrix_logistic.pdf
+│   └── confusion_matrix_tree.pdf
+├── heatmaps
+│   ├── alpha_global.pdf
+│   ├── alpha_R0.pdf
+│   ├── alpha_R1.pdf
+│   ├── alpha_global_R0_R1.pdf
+│   ├── f_R0.pdf
+│   ├── f_R1.pdf
+│   ├── C_R0.pdf
+│   └── C_R1.pdf
+└── time_plots
+    └── alpha_over_time.pdf
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+TASK 3 / SMOOTH COEFFICIENT PIPELINE
+
+python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json
+
+That means:
+read all default settings from smooth_coefficient_config.json
+run selected sinusoidal cases, monotonic drift, gaussian pulse cases, and zero-crossing sine
+run both sigma_sets: low_snr and high_snr
+run default loss: mse
+run global VAR and sliding VAR with W=20 and W=100
+save to:
+results\smooth_coefficient
+
+
+
+Quick test run:
+
+python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json --output-dir "results\Test_task3_single" --case-types sinusoidal --sigma-set-names high_snr --combo-limit 1 --n-runs 1 --ts-length 300 --epochs 1 --device cpu
+
+
+
+Run only high-SNR cases:
+
+python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json --sigma-set-names high_snr
+
+
+
+Run only low-SNR cases:
+
+python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json --sigma-set-names low_snr
+
+
+
+Run only sinusoidal cases with high-SNR:
+
+python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json --case-types sinusoidal --sigma-set-names high_snr
+
+
+
+Run only non-sinusoidal cases with high-SNR:
+
+python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json --case-types monotonic_drift,gaussian_pulse,zero_crossing_sine --sigma-set-names high_snr
+
+
+
+Run loss comparison on high-SNR:
+
+python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json --sigma-set-names high_snr --losses mse,huber,smooth_l1,mae
+
+
+
+Run longer training on high-SNR:
+
+python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json --sigma-set-names high_snr --epochs 300 --scheduler-patience 10 --early-stopping-modifier 3
+
+
+
+results
+└── smooth_coefficient
+    ├── run_config.json
+    ├── summary_tables
+    │   ├── all_case_summary.csv
+    │   ├── all_prediction_metrics.csv
+    │   ├── all_tracking_metrics.csv
+    │   ├── all_lag_sign_tables.csv
+    │   ├── all_link_tables.csv
+    │   ├── all_false_positives.csv
+    │   ├── all_var_metrics.csv
+    │   └── all_var_coefficients.csv
+    │
+    ├── sinusoidal
+    │   ├── a1_0p10_P_100_phi_0p00
+    │   ├── a1_0p25_P_500_phi_0p00
+    │   └── ...
+    │
+    ├── monotonic_drift
+    │   ├── amin_0p10_amax_0p90
+    │   └── ...
+    │
+    ├── gaussian_pulse
+    │   ├── a0_0p10_a1_0p75_t0_0p60_s_0p30
+    │   └── ...
+    │
+    └── zero_crossing_sine
+        ├── a1_0p60_P_500
+        └── ...
+
+
+sinusoidal
+└── a1_0p25_P_500_phi_0p00
+    ├── sigma_low_snr
+    └── sigma_high_snr
+
+a1_0p25_P_500_phi_0p00
+├── config.json
+├── generated_series.npz
+├── training_results.pkl
+├── metrics
+│   ├── prediction_metrics.csv
+│   ├── summary_metrics.csv
+│   ├── lag_sign_table.csv
+│   ├── link_table.csv
+│   ├── false_positives.csv
+│   ├── var_metrics.csv
+│   └── var_coefficients.csv
+├── time_series
+│   ├── all_X.pdf
+│   ├── X1.pdf
+│   ├── X2.pdf
+│   ├── X3.pdf
+│   ├── X4.pdf
+│   └── true_a_t.pdf
+├── heatmaps
+│   ├── alpha_global.pdf
+│   ├── focuser_global.pdf
+│   └── coefficient_global.pdf
+├── coefficient_tracking
+│   ├── dcits_alpha_vs_true.pdf
+│   ├── false_positive_mass.pdf
+│   └── var_comparison.pdf
+└── var
+    ├── global_var.pkl
+    └── sliding_var_coefficients.npz

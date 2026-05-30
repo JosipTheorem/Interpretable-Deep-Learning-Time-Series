@@ -4,7 +4,6 @@ This repository contains thesis experiment code for interpretable deep learning 
 
 It includes:
 
-- bead dynamics analysis notebooks;
 - synthetic DCIts stability experiments;
 - three reproducible experiment pipelines for the additional DCIts tasks;
 - JSON configurations, CSV-producing scripts, and plotting code.
@@ -17,21 +16,22 @@ https://github.com/hc-xai/dcits
 
 ```text
 .
-├── bead_analysis/
-│   └── bead notebooks
-├── Zadnje_poglavlje/
-│   ├── Zadatak1_pipeline.py
-│   ├── Zadatak2_pipeline.py
-│   ├── Zadatak3_pipeline.py
-│   ├── config_task1.json
-│   ├── config_task2.json
-│   ├── config_task3.json
-│   └── notebooks and command notes
-├── dcits_support/
-│   └── src/utils.py
-├── requirements.txt
-├── THIRD_PARTY.md
-└── LICENSE
+|-- synthetic_stability_experiments/
+|   |-- hidden_driver_pipeline.py
+|   |-- regime_change_pipeline.py
+|   |-- smooth_coefficient_pipeline.py
+|   |-- hidden_driver_config.json
+|   |-- regime_change_config.json
+|   |-- smooth_coefficient_config.json
+|   |-- hidden_driver_analysis.ipynb
+|   |-- regime_change_analysis.ipynb
+|   |-- smooth_coefficient_analysis.ipynb
+|   `-- komande.txt
+|-- dcits_support/
+|   `-- src/utils.py
+|-- requirements.txt
+|-- THIRD_PARTY.md
+`-- LICENSE
 ```
 
 ## Setup
@@ -51,7 +51,7 @@ pip install -r requirements.txt
 Copy the thesis experiment folder into the DCIts examples folder:
 
 ```powershell
-Copy-Item -Recurse -Force .\Zadnje_poglavlje .\DCIts\examples\Zadnje_poglavlje
+Copy-Item -Recurse -Force .\synthetic_stability_experiments .\DCIts\examples\synthetic_stability_experiments
 ```
 
 Copy the support version of `utils.py` into the DCIts source folder:
@@ -67,15 +67,15 @@ The support file keeps the original DCIts utility interface, but also stores per
 The main commands are collected in:
 
 ```text
-Zadnje_poglavlje/komande.txt
+synthetic_stability_experiments/komande.txt
 ```
 
 Typical pipeline runs:
 
 ```powershell
-python DCIts\examples\Zadnje_poglavlje\Zadatak1_pipeline.py --config DCIts\examples\Zadnje_poglavlje\config_task1.json
-python DCIts\examples\Zadnje_poglavlje\Zadatak2_pipeline.py --config DCIts\examples\Zadnje_poglavlje\config_task2.json
-python DCIts\examples\Zadnje_poglavlje\Zadatak3_pipeline.py --config DCIts\examples\Zadnje_poglavlje\config_task3.json
+python DCIts\examples\synthetic_stability_experiments\hidden_driver_pipeline.py --config DCIts\examples\synthetic_stability_experiments\hidden_driver_config.json
+python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json
+python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json
 ```
 
 The scripts save outputs as CSV tables and PDF figures. Large generated result folders are intentionally not tracked by git.
