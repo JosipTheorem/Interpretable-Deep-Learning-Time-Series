@@ -82,21 +82,7 @@ For notebook use, also install Jupyter tools:
 pip install jupyterlab notebook ipykernel
 ```
 
-### CUDA
-
-The pipelines use `--device auto` by default. If PyTorch sees a CUDA-capable GPU, DCIts will use CUDA; otherwise it falls back to CPU. You can also force CPU explicitly with `--device cpu`.
-
-CUDA is not pinned in `requirements.txt`, because the correct PyTorch build depends on the operating system, driver, GPU, and CUDA version. For GPU runs, install PyTorch using the official selector:
-
-https://pytorch.org/get-started/locally/
-
-Then check the environment:
-
-```powershell
-python -c "import torch; print(torch.__version__); print(torch.cuda.is_available())"
-```
-
-Copy this repository's experiment folder into the DCIts examples folder:
+## IMPORTANT: Copy this repository's experiment folder into the DCIts examples folder:
 
 ```powershell
 Copy-Item -Recurse -Force .\Interpretable-Deep-Learning-Time-Series\synthetic_stability_experiments .\DCIts\examples\synthetic_stability_experiments
@@ -111,6 +97,21 @@ Copy-Item -Force .\Interpretable-Deep-Learning-Time-Series\dcits_support\src\uti
 The support file keeps the original DCIts utility interface, but also stores per-window `alpha`, `f`, and `C` sequences and MAE values needed by the thesis metrics.
 
 After these copy steps, run the experiments from the `workspace/` folder so paths like `DCIts\examples\...` resolve correctly.
+
+
+### CUDA
+
+The pipelines use `--device auto` by default. If PyTorch sees a CUDA-capable GPU, DCIts will use CUDA; otherwise it falls back to CPU. You can also force CPU explicitly with `--device cpu`.
+
+CUDA is not pinned in `requirements.txt`, because the correct PyTorch build depends on the operating system, driver, GPU, and CUDA version. For GPU runs, install PyTorch using the official selector:
+
+https://pytorch.org/get-started/locally/
+
+Then check the environment:
+
+```powershell
+python -c "import torch; print(torch.__version__); print(torch.cuda.is_available())"
+```
 
 ## Running Experiments
 
