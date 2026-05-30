@@ -853,7 +853,7 @@ def run_parameter_set(args, coefficient_job, sigma_set, loss_name, device):
     )
     t_test = test_window_times(args.ts_length, args.window_length, args.train_ratio, args.val_ratio)
     a_t_test = a_t[t_test]
-    ground_truth_alpha = make_ground_truth_alpha(a_t, args.window_length)
+    ground_truth_alpha = make_ground_truth_alpha(a_t_test, args.window_length)
 
     np.savez_compressed(
         sigma_dir / "generated_series.npz",
