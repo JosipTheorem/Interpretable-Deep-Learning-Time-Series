@@ -739,7 +739,8 @@ def save_case_outputs(case_dir, case_label, time_series, a_t, a_t_test, ground_t
     link_table.to_csv(case_dir / "metrics" / "link_table.csv", index=False)
     false_positives.to_csv(case_dir / "metrics" / "false_positives.csv", index=False)
 
-    save_training_bundle(case_dir, results, stats)
+    if not args.no_training_results:
+        save_training_bundle(case_dir, results, stats)
 
     save_series_plot(time_series, case_dir / "time_series" / "all_X.pdf", f"{case_label}: generated time series")
     for idx, name in enumerate(NAMES):
@@ -1043,6 +1044,11 @@ def parse_args():
     parser.add_argument("--case-types", type=parse_string_list, default=["sinusoidal", "monotonic_drift", "gaussian_pulse", "zero_crossing_sine"])
     parser.add_argument("--losses", type=parse_string_list, default=["mse"])
     parser.add_argument("--var-windows", type=parse_int_list, default=[20, 100])
+    parser.add_argument(
+        "--no-training-results",
+        action="store_true",
+        help="Do not save training_results.pkl bundles with learned alpha/f/C sequences.",
+    )
 
     parser.add_argument("--ts-length", type=int, default=20000)
     parser.add_argument("--window-length", type=int, default=5)

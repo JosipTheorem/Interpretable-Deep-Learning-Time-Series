@@ -17,6 +17,7 @@ results/
 Notes:
 - Full runs use n_runs=10 and ts_length=20000 by default, so they can take a long time.
 - Add --device cpu if CUDA is not available or if you want a CPU-only test.
+- Add --no-training-results if you want CSV tables and PDF figures but do not want the large training_results.pkl files.
 - Use the quick test commands first to check that the setup works.
 - Command-line arguments override values from the JSON config files.
 
@@ -28,6 +29,10 @@ TASK 1: HIDDEN DRIVER / OBSERVED DRIVER
 Full default run:
 
 python DCIts\examples\synthetic_stability_experiments\hidden_driver_pipeline.py --config DCIts\examples\synthetic_stability_experiments\hidden_driver_config.json
+
+Full default run without large training_results.pkl files:
+
+python DCIts\examples\synthetic_stability_experiments\hidden_driver_pipeline.py --config DCIts\examples\synthetic_stability_experiments\hidden_driver_config.json --no-training-results
 
 Default settings come from hidden_driver_config.json:
 - A_values = 0.5, 1.0, 2.0
@@ -77,8 +82,9 @@ results/hidden_driver/
 `-- control_A0/
     `-- A_0p0_rho_.../
 
-Each observed/hidden case folder contains training_results.pkl, stable_links.csv,
-lag_table.csv, false_positives.csv, and heatmap PDFs.
+Each observed/hidden case folder contains stable_links.csv, lag_table.csv,
+false_positives.csv, and heatmap PDFs. It also contains training_results.pkl
+unless --no-training-results is used.
 
 
 ===============================================================================
@@ -88,6 +94,10 @@ TASK 2: REGIME CHANGE
 Full default run:
 
 python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json
+
+Full default run without large training_results.pkl files:
+
+python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json --no-training-results
 
 Default settings come from regime_change_config.json:
 - B_values = [25,75], [50,150], [100,300], [50,2000]
@@ -145,7 +155,6 @@ results/regime_change/
             `-- sign_change/
 
 Each source_change / lag_change / sign_change folder contains:
-- training_results.pkl
 - metrics/prediction_metrics.csv
 - metrics/regime_metrics.csv
 - metrics/lag_sign_metrics.csv
@@ -155,6 +164,7 @@ Each source_change / lag_change / sign_change folder contains:
 - classification/confusion_matrix_*.pdf
 - heatmaps/*.pdf
 - time_plots/alpha_over_time.pdf
+- training_results.pkl, unless --no-training-results is used
 
 
 ===============================================================================
@@ -164,6 +174,10 @@ TASK 3: SMOOTHLY TIME-VARYING COEFFICIENT
 Full default run:
 
 python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json
+
+Full default run without large training_results.pkl files:
+
+python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json --no-training-results
 
 Default settings come from smooth_coefficient_config.json:
 - case_types = sinusoidal, monotonic_drift, gaussian_pulse, zero_crossing_sine
@@ -224,7 +238,6 @@ case_type/case_id/sigma_name/
 |-- generated_series.npz
 `-- loss_mse/
     |-- config.json
-    |-- training_results.pkl
     |-- metrics/
     |   |-- prediction_metrics.csv
     |   |-- summary_metrics.csv
@@ -239,3 +252,6 @@ case_type/case_id/sigma_name/
         |-- global_var.pkl
         |-- sliding_var_W_20.npz
         `-- sliding_var_W_100.npz
+
+The loss folder also contains training_results.pkl unless --no-training-results
+is used.

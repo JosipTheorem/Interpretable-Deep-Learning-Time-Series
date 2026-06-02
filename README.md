@@ -131,6 +131,8 @@ python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipelin
 
 The scripts save outputs as CSV tables and PDF figures. Large generated result folders are intentionally not tracked by git.
 
+Add `--no-training-results` to any pipeline command if you want to keep the CSV tables and PDF figures but skip the large `training_results.pkl` bundles.
+
 ## Running Notebooks
 
 After the setup and copy steps, start Jupyter from the same environment.
