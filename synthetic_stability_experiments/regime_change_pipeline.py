@@ -142,11 +142,44 @@ def time_series_regime_change(
     }
 
 
+def pad_lag_axis(values, n_lags, fill_value=0.0):
+    values = tensor_to_numpy(values)
+    if values.shape[2] == n_lags:
+        return values
+
+    out = np.full(values.shape[:2] + (n_lags,), fill_value, dtype=values.dtype)
+    n_copy = min(values.shape[2], n_lags)
+    out[:, :, :n_copy] = values[:, :, :n_copy]
+    return out
+
+
+def pad_lag_matrix(values, n_lags, fill_value=0.0):
+    values = np.asarray(values)
+    if values.shape[1] == n_lags:
+        return values
+
+    out = np.full((values.shape[0], n_lags), fill_value, dtype=values.dtype)
+    n_copy = min(values.shape[1], n_lags)
+    out[:, :n_copy] = values[:, :n_copy]
+    return out
+
+
+def align_lag_axes(estimated, ground_truth, fill_value=0.0):
+    estimated = tensor_to_numpy(estimated)
+    ground_truth = tensor_to_numpy(ground_truth)
+    n_lags = max(estimated.shape[2], ground_truth.shape[2])
+    return (
+        pad_lag_axis(estimated, n_lags, fill_value=fill_value),
+        pad_lag_axis(ground_truth, n_lags, fill_value=0.0),
+    )
+
+
 def make_ground_truths(window_length):
     truth = {}
+    ground_truth_lags = max(window_length, 4)
 
-    source_R0 = torch.zeros(4, 4, window_length)
-    source_R1 = torch.zeros(4, 4, window_length)
+    source_R0 = torch.zeros(4, 4, ground_truth_lags)
+    source_R1 = torch.zeros(4, 4, ground_truth_lags)
     source_R0[0, 0, 0] = source_R1[0, 0, 0] = 0.4
     source_R0[3, 3, 0] = source_R1[3, 3, 0] = 0.5
     source_R0[1, 0, 1] = 0.7
@@ -164,8 +197,8 @@ def make_ground_truths(window_length):
         ],
     }
 
-    lag_R0 = torch.zeros(4, 4, window_length)
-    lag_R1 = torch.zeros(4, 4, window_length)
+    lag_R0 = torch.zeros(4, 4, ground_truth_lags)
+    lag_R1 = torch.zeros(4, 4, ground_truth_lags)
     lag_R0[0, 0, 0] = lag_R1[0, 0, 0] = 0.4
     lag_R0[3, 3, 0] = lag_R1[3, 3, 0] = 0.5
     lag_R0[1, 0, 0] = 0.7
@@ -182,8 +215,8 @@ def make_ground_truths(window_length):
         ],
     }
 
-    sign_R0 = torch.zeros(4, 4, window_length)
-    sign_R1 = torch.zeros(4, 4, window_length)
+    sign_R0 = torch.zeros(4, 4, ground_truth_lags)
+    sign_R1 = torch.zeros(4, 4, ground_truth_lags)
     sign_R0[0, 0, 0] = sign_R1[0, 0, 0] = 0.4
     sign_R0[3, 3, 0] = sign_R1[3, 3, 0] = 0.5
     sign_R0[1, 0, 1] = 0.7
@@ -267,11 +300,17 @@ def task2_metrics(results_case, alpha_stats, ground_truth_R0, ground_truth_R1, n
         alpha_mean = np.flip(alpha_stats[regime]["mean"], axis=2)
         alpha_std = np.flip(alpha_stats[regime]["std"], axis=2)
         alpha_gt = tensor_to_numpy(ground_truth)
+        estimated_n_lags = alpha_mean.shape[2]
+        n_lags = max(estimated_n_lags, alpha_gt.shape[2])
+        alpha_mean = pad_lag_axis(alpha_mean, n_lags)
+        alpha_std = pad_lag_axis(alpha_std, n_lags)
+        alpha_gt = pad_lag_axis(alpha_gt, n_lags)
 
         stable_mask = (np.abs(alpha_mean) > c * alpha_std) & (np.abs(alpha_mean) >= threshold)
         true_mask = alpha_gt != 0
 
         for target, source, lag in np.argwhere(stable_mask | true_mask):
+            lag_available = lag < estimated_n_lags
             stable = bool(stable_mask[target, source, lag])
             true_link = bool(true_mask[target, source, lag])
             if stable and true_link:
@@ -292,6 +331,7 @@ def task2_metrics(results_case, alpha_stats, ground_truth_R0, ground_truth_R1, n
                     "mean_alpha": alpha_mean[target, source, lag],
                     "std_alpha": alpha_std[target, source, lag],
                     "ground_truth_alpha": alpha_gt[target, source, lag],
+                    "lag_available": lag_available,
                     "stable": stable,
                     "true_link": true_link,
                     "link_type": link_type,
@@ -301,6 +341,8 @@ def task2_metrics(results_case, alpha_stats, ground_truth_R0, ground_truth_R1, n
         for target, source, true_lag in np.argwhere(true_mask):
             estimated_lags = alpha_mean[target, source]
             best_lag = int(np.argmax(np.abs(estimated_lags)))
+            true_lag_available = true_lag < estimated_n_lags
+            estimated_alpha_true_lag = estimated_lags[true_lag] if true_lag_available else np.nan
             lag_sign_rows.append(
                 {
                     "regime": regime,
@@ -310,10 +352,14 @@ def task2_metrics(results_case, alpha_stats, ground_truth_R0, ground_truth_R1, n
                     "estimated_best_lag": best_lag + 1,
                     "correct_lag": best_lag == true_lag,
                     "ground_truth_alpha": alpha_gt[target, source, true_lag],
-                    "estimated_alpha_true_lag": estimated_lags[true_lag],
+                    "lag_available": true_lag_available,
+                    "estimated_alpha_true_lag": estimated_alpha_true_lag,
                     "estimated_alpha_best_lag": estimated_lags[best_lag],
-                    "correct_sign": np.sign(estimated_lags[true_lag])
-                    == np.sign(alpha_gt[target, source, true_lag]),
+                    "correct_sign": (
+                        bool(np.sign(estimated_alpha_true_lag) == np.sign(alpha_gt[target, source, true_lag]))
+                        if true_lag_available
+                        else False
+                    ),
                 }
             )
 
@@ -459,7 +505,9 @@ def plot_alphas_one_canvas(
     cbar_font=11,
     save_path=None,
 ):
+    alpha = tensor_to_numpy(alpha)
     ground_truth_alpha = tensor_to_numpy(ground_truth_alpha)
+    n_lags = max(alpha.shape[2], ground_truth_alpha.shape[2])
     n_targets = alpha.shape[0]
 
     fig, axes = plt.subplots(
@@ -483,6 +531,7 @@ def plot_alphas_one_canvas(
             ax = axes[i, idx]
             if needs_flip:
                 data = np.flip(data, axis=1)
+            data = pad_lag_matrix(data, n_lags)
 
             abs_max_value = max(np.max(np.abs(data)), 1e-12)
             im = ax.imshow(data, cmap=cmap, vmin=-abs_max_value, vmax=abs_max_value)
@@ -521,11 +570,14 @@ def plot_regime_heatmap_canvas(cases, names, title="alpha comparison", cmap="sei
     truths = []
 
     for _, alpha, ground_truth in cases:
-        estimated.append(np.flip(np.asarray(alpha), axis=2))
-        truths.append(tensor_to_numpy(ground_truth))
+        estimated_alpha, truth_alpha = align_lag_axes(np.flip(np.asarray(alpha), axis=2), ground_truth)
+        estimated.append(estimated_alpha)
+        truths.append(truth_alpha)
 
     n_cases = len(cases)
-    n_lags = estimated[0].shape[2]
+    n_lags = max(max(est.shape[2], gt.shape[2]) for est, gt in zip(estimated, truths))
+    estimated = [pad_lag_axis(est, n_lags) for est in estimated]
+    truths = [pad_lag_axis(gt, n_lags) for gt in truths]
     n_series = estimated[0].shape[0]
     n_rows = 2 * n_cases
     vmax = max(max(np.max(np.abs(est)), np.max(np.abs(gt))) for est, gt in zip(estimated, truths))
@@ -628,14 +680,29 @@ def plot_alpha_time_grid(
 
     t = np.arange(len(test_regimes))
     for ax, (target, source, lag) in zip(axes, interesting_alphas):
-        y = alpha_mean_t[:, target, source, lag]
-        s = alpha_std_t[:, target, source, lag]
+        lag_available = lag < alpha_mean_t.shape[3]
+        if lag_available:
+            y = alpha_mean_t[:, target, source, lag]
+            s = alpha_std_t[:, target, source, lag]
+        else:
+            y = np.full(len(t), np.nan)
+            s = np.zeros(len(t))
         gt_R0 = float(ground_truth_R0[target, source, lag])
         gt_R1 = float(ground_truth_R1[target, source, lag])
         gt = np.where(test_regimes == 0, gt_R0, gt_R1)
 
-        ax.plot(t, y, label="mean alpha")
-        ax.fill_between(t, y - s, y + s, alpha=0.25, color="red", label="+/- std")
+        if lag_available:
+            ax.plot(t, y, label="mean alpha")
+            ax.fill_between(t, y - s, y + s, alpha=0.25, color="red", label="+/- std")
+        else:
+            ax.text(
+                0.02,
+                0.85,
+                f"lag {lag + 1} is outside model window L={alpha_mean_t.shape[3]}",
+                transform=ax.transAxes,
+                fontsize=10,
+                bbox={"facecolor": "white", "alpha": 0.8, "edgecolor": "none"},
+            )
         ax.step(t, gt, where="post", color="black", linewidth=2, linestyle="--", alpha=0.7, label="ground truth alpha")
         ax.axhline(0, color="gray", linewidth=1)
         ax.set_ylabel("alpha")
@@ -740,7 +807,8 @@ def save_case_outputs(case_dir, case_name, results, stats, regimes, truth, args)
     link_table.to_csv(case_dir / "metrics" / "link_table.csv", index=False)
     false_positives.to_csv(case_dir / "metrics" / "false_positives.csv", index=False)
 
-    save_training_bundle(case_dir, results, stats)
+    if not args.no_training_results:
+        save_training_bundle(case_dir, results, stats)
 
     plot_alphas_one_canvas(global_alpha, global_truth, title=r"\alpha", save_path=case_dir / "heatmaps" / "alpha_global.pdf")
     plot_alphas_one_canvas(alpha_stats[0]["mean"], truth["R0"], save_path=case_dir / "heatmaps" / "alpha_R0.pdf")
@@ -1031,6 +1099,11 @@ def parse_args():
     parser.add_argument("--combo-limit", type=int, default=None)
     parser.add_argument("--B-values", type=parse_b_values, default=[[25, 75], [50, 150], [100, 300], [50, 2000]])
     parser.add_argument("--losses", type=parse_string_list, default=["mse"])
+    parser.add_argument(
+        "--no-training-results",
+        action="store_true",
+        help="Do not save training_results.pkl bundles with learned alpha/f/C sequences.",
+    )
 
     parser.add_argument("--ts-length", type=int, default=20000)
     parser.add_argument("--window-length", type=int, default=5)

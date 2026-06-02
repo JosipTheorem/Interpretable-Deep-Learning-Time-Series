@@ -576,10 +576,11 @@ def build_cases(observed, hidden, hidden_without_seasonal, truth):
     }
 
 
-def save_case_outputs(case_dir, case):
+def save_case_outputs(case_dir, case, save_training_results=True):
     case_dir.mkdir(parents=True, exist_ok=True)
 
-    save_training_bundle(case_dir, case)
+    if save_training_results:
+        save_training_bundle(case_dir, case)
     case["stable_links"].to_csv(case_dir / "stable_links.csv", index=False)
     case["false_positives"].to_csv(case_dir / "false_positives.csv", index=False)
     case["lag_table"].to_csv(case_dir / "lag_table.csv", index=False)
@@ -769,7 +770,11 @@ def run_parameter_set(args, group_name, run_dir, A, P, rho_U, is_control, device
         lag_table_with_meta.insert(0, "group", group_name)
         lag_rows.extend(lag_table_with_meta.to_dict("records"))
 
-        save_case_outputs(run_dir / case_name, case)
+        save_case_outputs(
+            run_dir / case_name,
+            case,
+            save_training_results=not args.no_training_results,
+        )
 
         del case["results"]
         del case["time_series"]
@@ -852,6 +857,11 @@ def parse_args():
     parser.add_argument("--rho-values", type=parse_float_list, default=[0.0, 0.3, 0.7])
     parser.add_argument("--skip-control", action="store_true")
     parser.add_argument("--only-control", action="store_true")
+    parser.add_argument(
+        "--no-training-results",
+        action="store_true",
+        help="Do not save training_results.pkl bundles with learned alpha/f/C sequences.",
+    )
 
     parser.add_argument("--ts-length", type=int, default=20000)
     parser.add_argument("--window-length", type=int, default=5)
