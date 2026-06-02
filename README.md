@@ -1,4 +1,4 @@
-# Interpretable Deep Learning for Time Series with DCIts
+﻿# Interpretable Deep Learning for Time Series with DCIts
 
 This repository contains thesis experiment code for interpretable deep learning on time series using DCIts.
 
@@ -6,7 +6,8 @@ It includes:
 
 - synthetic DCIts stability experiments;
 - three reproducible experiment pipelines for the additional DCIts tasks;
-- JSON configurations, CSV-producing scripts, and plotting code.
+- JSON configurations, CSV-producing scripts, and plotting code;
+- a small curated `selected_results/` folder with representative CSV tables and PDF figures.
 
 The experiments build on the original DCIts implementation:
 
@@ -16,6 +17,7 @@ https://github.com/hc-xai/dcits
 
 ```text
 .
+|-- selected_results/
 |-- synthetic_stability_experiments/
 |   |-- hidden_driver_pipeline.py
 |   |-- regime_change_pipeline.py
@@ -132,6 +134,15 @@ python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipelin
 The scripts save outputs as CSV tables and PDF figures. Large generated result folders are intentionally not tracked by git.
 
 Add `--no-training-results` to any pipeline command if you want to keep the CSV tables and PDF figures but skip the large `training_results.pkl` bundles.
+## Selected Results
+
+A lightweight subset of generated outputs is included in:
+
+```text
+selected_results/
+```
+
+This folder is small enough to keep in git and contains representative CSV tables and PDF figures from the three experiment groups. The complete local result folders are larger and are intentionally not tracked; they can be regenerated with the pipeline commands.
 
 ## Running Notebooks
 
@@ -177,3 +188,6 @@ For full reproduction, use the same Python environment and run the commands from
 This experiment code is released under the MIT License. See `LICENSE`.
 
 The project depends on DCIts, which is also distributed under the MIT License. See `THIRD_PARTY.md`.
+
+
+
