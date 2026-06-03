@@ -1,0 +1,31 @@
+# Experimental bead / echo analysis commands
+#
+# Run these from the repository root in the sibling-repo layout:
+#
+# workspace/
+# |-- DCIts/
+# `-- Interpretable-Deep-Learning-Time-Series/
+#
+# The default data root is experimental_bead_analysis\sample_data.
+# For full experiments, pass --data-root to the complete local Eva tracking dataset.
+
+# Quick smoke test: one echo, one cluster, no DCIts training.
+python experimental_bead_analysis\echo_analysis_pipeline.py --echo-limit 1 --cluster-limit 1 --skip-training --skip-acf-pacf
+
+# Test one echo with one cluster, including DCIts training plots/statistics.
+python experimental_bead_analysis\echo_analysis_pipeline.py --echo-limit 1 --cluster-limit 1
+
+# Full V2 run.
+python experimental_bead_analysis\echo_analysis_pipeline.py
+
+# Full V2 run, but every even echo uses about 20 beads per cluster.
+python experimental_bead_analysis\echo_analysis_pipeline.py --alternate-n-series-to-model 20 --alternate-n-series-on even
+
+# Resume from a specific echo.
+python experimental_bead_analysis\echo_analysis_pipeline.py --start-at gamma_60perc/echo2
+
+# Optional: disable shuffled controls.
+python experimental_bead_analysis\echo_analysis_pipeline.py --no-shuffled-controls
+
+# 60% amplitude from the beginning, with every even echo using about 20 beads per cluster.
+python experimental_bead_analysis\echo_analysis_pipeline.py --start-at gamma_60perc/echo1 --alternate-n-series-to-model 20 --alternate-n-series-on even

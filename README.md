@@ -7,6 +7,7 @@ It includes:
 - synthetic DCIts stability experiments;
 - three reproducible experiment pipelines for the additional DCIts tasks;
 - cleaned Dataset 7 robustness notebooks from the earlier seminar work;
+- experimental bead-tracking echo analysis code and selected outputs;
 - JSON configurations, CSV-producing scripts, and plotting code;
 - small curated result/figure folders with representative outputs.
 
@@ -19,6 +20,13 @@ https://github.com/hc-xai/dcits
 ```text
 .
 |-- selected_results/
+|-- experimental_bead_analysis/
+|   |-- echo_analysis_pipeline.py
+|   |-- notebooks/
+|   |-- support_utils/
+|   |-- selected_results/
+|   |-- README.md
+|   `-- REPRODUCTION_NOTES_FOR_CODEX.md
 |-- dataset7_robustness_experiments/
 |   |-- notebooks/
 |   |-- support_utils/
@@ -111,9 +119,20 @@ The support file keeps the original DCIts utility interface, but also stores per
 The final pipeline notebooks should be opened and run from `DCIts/examples/synthetic_stability_experiments/`. The Dataset 7 robustness notebooks are different: they can be opened directly from `dataset7_robustness_experiments/` because they carry their own seminar support utilities.
 
 
+The experimental bead echo analysis is also self-contained inside this repository. Its commands are run from the repository root and its notebook can be opened from:
+
+```text
+experimental_bead_analysis/notebooks/
+```
+
+It ships with a tiny two-cluster `.mat` sample in `experimental_bead_analysis/sample_data/`. The full Eva tracking dataset is not included in git; see `experimental_bead_analysis/README.md` for how to pass a full local data folder. If redistribution permission for the sample `.mat` files is uncertain, confirm it before publishing the repository publicly.
+
+
 ### CUDA
 
-The pipelines use `--device auto` by default. If PyTorch sees a CUDA-capable GPU, DCIts will use CUDA; otherwise it falls back to CPU. You can also force CPU explicitly with `--device cpu`.
+The synthetic pipelines use `--device auto` by default. If PyTorch sees a CUDA-capable GPU, DCIts will use CUDA; otherwise it falls back to CPU. You can also force CPU explicitly with `--device cpu`.
+
+The experimental bead pipeline also auto-selects CUDA when available, but it does not expose a separate `--device` flag.
 
 CUDA is not pinned in `requirements.txt`, because the correct PyTorch build depends on the operating system, driver, GPU, and CUDA version. For GPU runs, install PyTorch using the official selector:
 
@@ -131,6 +150,12 @@ The main commands are collected in:
 
 ```text
 synthetic_stability_experiments/run_commands.txt
+```
+
+Experimental bead-analysis commands are collected in:
+
+```text
+experimental_bead_analysis/run_commands.txt
 ```
 
 Typical pipeline runs:
@@ -154,6 +179,12 @@ selected_results/
 ```
 
 This folder is small enough to keep in git and contains representative CSV tables and PDF figures from the three final pipeline groups. The complete local result folders are larger and are intentionally not tracked; they can be regenerated with the pipeline commands.
+
+Experimental bead-analysis representative outputs are tracked separately in:
+
+```text
+experimental_bead_analysis/selected_results/
+```
 
 ## Dataset 7 Robustness Notebooks
 
