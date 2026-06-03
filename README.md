@@ -1,4 +1,4 @@
-﻿# Interpretable Deep Learning for Time Series with DCIts
+# Interpretable Deep Learning for Time Series with DCIts
 
 This repository contains thesis experiment code for interpretable deep learning on time series using DCIts.
 
@@ -6,8 +6,9 @@ It includes:
 
 - synthetic DCIts stability experiments;
 - three reproducible experiment pipelines for the additional DCIts tasks;
+- cleaned Dataset 7 robustness notebooks from the earlier seminar work;
 - JSON configurations, CSV-producing scripts, and plotting code;
-- a small curated `selected_results/` folder with representative CSV tables and PDF figures.
+- small curated result/figure folders with representative outputs.
 
 The experiments build on the original DCIts implementation:
 
@@ -18,6 +19,13 @@ https://github.com/hc-xai/dcits
 ```text
 .
 |-- selected_results/
+|-- dataset7_robustness_experiments/
+|   |-- notebooks/
+|   |-- support_utils/
+|   |-- selected_figures/
+|   |-- seminar_report/
+|   |-- README.md
+|   `-- REPRODUCTION_NOTES_FOR_CODEX.md
 |-- synthetic_stability_experiments/
 |   |-- hidden_driver_pipeline.py
 |   |-- regime_change_pipeline.py
@@ -84,7 +92,9 @@ For notebook use, also install Jupyter tools:
 pip install jupyterlab notebook ipykernel
 ```
 
-## IMPORTANT: Copy this repository's experiment folder into the DCIts examples folder:
+## Final Pipeline Setup
+
+This step is needed for the final pipeline-based experiments in `synthetic_stability_experiments/`. Copy that folder into the local DCIts `examples` folder:
 
 ```powershell
 Copy-Item -Recurse -Force .\Interpretable-Deep-Learning-Time-Series\synthetic_stability_experiments .\DCIts\examples\synthetic_stability_experiments
@@ -98,7 +108,7 @@ Copy-Item -Force .\Interpretable-Deep-Learning-Time-Series\dcits_support\src\uti
 
 The support file keeps the original DCIts utility interface, but also stores per-window `alpha`, `f`, and `C` sequences and MAE values needed by the thesis metrics.
 
-The notebooks should be opened and run from `DCIts/examples/synthetic_stability_experiments/`.
+The final pipeline notebooks should be opened and run from `DCIts/examples/synthetic_stability_experiments/`. The Dataset 7 robustness notebooks are different: they can be opened directly from `dataset7_robustness_experiments/` because they carry their own seminar support utilities.
 
 
 ### CUDA
@@ -134,6 +144,7 @@ python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipelin
 The scripts save outputs as CSV tables and PDF figures. Large generated result folders are intentionally not tracked by git.
 
 Add `--no-training-results` to any pipeline command if you want to keep the CSV tables and PDF figures but skip the large `training_results.pkl` bundles.
+
 ## Selected Results
 
 A lightweight subset of generated outputs is included in:
@@ -142,11 +153,41 @@ A lightweight subset of generated outputs is included in:
 selected_results/
 ```
 
-This folder is small enough to keep in git and contains representative CSV tables and PDF figures from the three experiment groups. The complete local result folders are larger and are intentionally not tracked; they can be regenerated with the pipeline commands.
+This folder is small enough to keep in git and contains representative CSV tables and PDF figures from the three final pipeline groups. The complete local result folders are larger and are intentionally not tracked; they can be regenerated with the pipeline commands.
 
-## Running Notebooks
+## Dataset 7 Robustness Notebooks
 
-After the setup and copy steps, start Jupyter from the same environment.
+The earlier seminar-era Dataset 7 robustness work is included in:
+
+```text
+dataset7_robustness_experiments/
+```
+
+It contains cleaned notebooks for:
+
+```text
+noise_sigma
+missing_values_imputation
+dynamics_change
+```
+
+These notebooks can be run directly from this repository as long as the original `DCIts/` clone is next to it in the workspace. They use `dataset7_robustness_experiments/support_utils/` for the seminar-specific utility functions and write regenerated outputs to ignored local `artifacts/` folders.
+
+Open the folder README for details:
+
+```text
+dataset7_robustness_experiments/README.md
+```
+
+A small curated image set is tracked in:
+
+```text
+dataset7_robustness_experiments/selected_figures/
+```
+
+## Running Final Pipeline Notebooks
+
+After the setup and copy steps for `synthetic_stability_experiments/`, start Jupyter from the same environment.
 
 With classic Jupyter Notebook:
 
@@ -168,7 +209,7 @@ regime_change_analysis.ipynb
 smooth_coefficient_analysis.ipynb
 ```
 
-The notebooks expect to live inside `DCIts/examples/synthetic_stability_experiments/`, because they add `../..` to `sys.path` to import `src.utils`.
+The final pipeline notebooks expect to live inside `DCIts/examples/synthetic_stability_experiments/`, because they add `../..` to `sys.path` to import `src.utils`. Dataset 7 notebooks are documented separately in `dataset7_robustness_experiments/README.md`.
 
 ## Reproducibility
 
@@ -181,7 +222,7 @@ The experiment code records:
 - false positive summaries;
 - vector figures and CSV summaries.
 
-For full reproduction, use the same Python environment and run the commands from `run_commands.txt`.
+For full reproduction of the final pipeline experiments, use the same Python environment and run the commands from `synthetic_stability_experiments/run_commands.txt`. For the Dataset 7 robustness notebooks, see `dataset7_robustness_experiments/README.md`.
 
 ## License
 
