@@ -1,6 +1,6 @@
 # Dataset 7 Robustness Experiments
 
-This folder contains the cleaned seminar-era Dataset 7 experiments used as supporting material for the thesis work on interpretable DCIts time-series models.
+This folder contains the Dataset 7 experiments used as supporting material for the work on interpretable DCIts time-series models.
 
 These notebooks are separate from the later pipeline-based experiments in `synthetic_stability_experiments/`. They study how DCIts interpretations behave under:
 
@@ -41,7 +41,7 @@ workspace/
 `-- Interpretable-Deep-Learning-Time-Series/
 ```
 
-The notebooks can be run directly from this repository. They do not need to be copied into `DCIts/examples/`, and no `dcits_support` copy step is needed for these seminar notebooks, because each notebook searches for both:
+The notebooks can be run directly from this repository. They do not need to be copied into `DCIts/examples/`, and no `dcits_support` copy step is needed for these notebooks, because each notebook searches for both:
 
 - `dataset7_robustness_experiments/support_utils/`; and
 - the nearby original `DCIts/src/dcits.py` source file.
@@ -73,8 +73,6 @@ selected_figures/dynamics_change/regime_A_target_X3_alpha_heatmap_corrected.*
 selected_figures/dynamics_change/regime_B_target_X3_alpha_heatmap_corrected.*
 ```
 
-Older plots named like `alfe_prvi_rezim_X3` and `alfe_drugi_rezim_X3` were misleading because the target/source/physical-lag labeling was not explicit enough; they are not part of the selected figure set.
-
 ## Reproduction Notes
 
 `REPRODUCTION_NOTES_FOR_CODEX.md` is a practical handoff file for future debugging/reproduction. It records:
@@ -85,8 +83,6 @@ Older plots named like `alfe_prvi_rezim_X3` and `alfe_drugi_rezim_X3` were misle
 - selected figure names;
 - lag-axis conventions;
 - how to regenerate figures from cached `.pkl` files when available.
-
-It is intentionally more operational than polished. Use it when a specific figure or result needs to be recreated later.
 
 ## Seminar Report
 
