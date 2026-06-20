@@ -6,7 +6,6 @@ It includes:
 
 - synthetic DCIts stability experiments;
 - three reproducible experiment pipelines for the additional DCIts tasks;
-- cleaned Dataset 7 robustness notebooks from the earlier seminar work;
 - experimental bead-tracking echo analysis code and selected outputs;
 - JSON configurations, CSV-producing scripts, and plotting code;
 - small curated result/figure folders with representative outputs.
@@ -116,7 +115,7 @@ Copy-Item -Force .\Interpretable-Deep-Learning-Time-Series\dcits_support\src\uti
 
 The support file keeps the original DCIts utility interface, but also stores per-window `alpha`, `f`, and `C` sequences and MAE values needed by the thesis metrics.
 
-The final pipeline notebooks should be opened and run from `DCIts/examples/synthetic_stability_experiments/`. The Dataset 7 robustness notebooks are different: they can be opened directly from `dataset7_robustness_experiments/` because they carry their own seminar support utilities.
+The final pipeline notebooks should be opened and run from `DCIts/examples/synthetic_stability_experiments/`. The Dataset 7 robustness notebooks are different: they can be opened directly from `dataset7_robustness_experiments/` because they carry their own support utilities.
 
 
 The experimental bead echo analysis is also self-contained inside this repository. Its commands are run from the repository root and its notebook can be opened from:
@@ -125,7 +124,7 @@ The experimental bead echo analysis is also self-contained inside this repositor
 experimental_bead_analysis/notebooks/
 ```
 
-It ships with a tiny two-cluster `.mat` sample in `experimental_bead_analysis/sample_data/`. The full Eva tracking dataset is not included in git; see `experimental_bead_analysis/README.md` for how to pass a full local data folder. If redistribution permission for the sample `.mat` files is uncertain, confirm it before publishing the repository publicly.
+It ships with a tiny two-cluster `.mat` sample in `experimental_bead_analysis/sample_data/`. The full tracking dataset is not included in git; see `experimental_bead_analysis/README.md` for how to pass a full local data folder.
 
 
 ### CUDA
@@ -188,7 +187,7 @@ experimental_bead_analysis/selected_results/
 
 ## Dataset 7 Robustness Notebooks
 
-The earlier seminar-era Dataset 7 robustness work is included in:
+Dataset 7 robustness work is included in:
 
 ```text
 dataset7_robustness_experiments/
@@ -202,7 +201,7 @@ missing_values_imputation
 dynamics_change
 ```
 
-These notebooks can be run directly from this repository as long as the original `DCIts/` clone is next to it in the workspace. They use `dataset7_robustness_experiments/support_utils/` for the seminar-specific utility functions and write regenerated outputs to ignored local `artifacts/` folders.
+These notebooks can be run directly from this repository as long as the original `DCIts/` clone is next to it in the workspace. They use `dataset7_robustness_experiments/support_utils/` for the utility functions and write regenerated outputs to ignored local `artifacts/` folders.
 
 Open the folder README for details:
 
