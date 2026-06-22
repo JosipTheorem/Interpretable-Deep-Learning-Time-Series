@@ -1,4 +1,4 @@
-# Extra packages used by the thesis pipeline scripts.
+# Extra packages used by the experiment pipelines.
 # Install the official DCIts requirements first.
 #
 # PyTorch is required by DCIts. CPU/CUDA builds depend on the machine,

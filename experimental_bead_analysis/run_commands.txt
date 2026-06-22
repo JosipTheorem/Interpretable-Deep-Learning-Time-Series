@@ -7,7 +7,7 @@
 # `-- Interpretable-Deep-Learning-Time-Series/
 #
 # The default data root is experimental_bead_analysis\sample_data.
-# For full experiments, pass --data-root to the complete local Eva tracking dataset.
+# For full experiments, pass --data-root to a local copy of the complete tracking data set.
 
 # Quick smoke test: one echo, one cluster, no DCIts training.
 python experimental_bead_analysis\echo_analysis_pipeline.py --echo-limit 1 --cluster-limit 1 --skip-training --skip-acf-pacf
@@ -15,10 +15,10 @@ python experimental_bead_analysis\echo_analysis_pipeline.py --echo-limit 1 --clu
 # Test one echo with one cluster, including DCIts training plots/statistics.
 python experimental_bead_analysis\echo_analysis_pipeline.py --echo-limit 1 --cluster-limit 1
 
-# Full V2 run.
+# Full pipeline run.
 python experimental_bead_analysis\echo_analysis_pipeline.py
 
-# Full V2 run, but every even echo uses about 20 beads per cluster.
+# Full pipeline run, with about 20 beads per cluster on every even echo.
 python experimental_bead_analysis\echo_analysis_pipeline.py --alternate-n-series-to-model 20 --alternate-n-series-on even
 
 # Resume from a specific echo.

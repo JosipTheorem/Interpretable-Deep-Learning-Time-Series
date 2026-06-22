@@ -43,7 +43,7 @@ Quick smoke test:
 
 python synthetic_stability_experiments\hidden_driver_pipeline.py --config synthetic_stability_experiments\hidden_driver_config.json --A-values 1.0 --P-values 200 --rho-values 0.3 --skip-control --n-runs 1 --ts-length 1000 --epochs 1 --output-dir "results/test_hidden_driver_single"
 
-Main sweeps used for the thesis:
+Representative parameter sweeps:
 
 python synthetic_stability_experiments\hidden_driver_pipeline.py --config synthetic_stability_experiments\hidden_driver_config.json --A-values 0.5,1.0,2.0 --P-values 200 --rho-values 0.3 --skip-control
 
