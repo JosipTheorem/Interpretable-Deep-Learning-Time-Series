@@ -1,14 +1,12 @@
 # Synthetic Stability Experiment Commands
 
-Run these commands from the shared workspace folder after setup:
+Run these commands from the repository root after setup:
 
 workspace/
 |-- DCIts/
 `-- Interpretable-Deep-Learning-Time-Series/
 
-The experiment folder must be copied into:
-
-DCIts/examples/synthetic_stability_experiments/
+The pipelines use the sibling `DCIts/` checkout automatically. Do not copy files into it.
 
 All default outputs are written under:
 
@@ -28,11 +26,11 @@ TASK 1: HIDDEN DRIVER / OBSERVED DRIVER
 
 Full default run:
 
-python DCIts\examples\synthetic_stability_experiments\hidden_driver_pipeline.py --config DCIts\examples\synthetic_stability_experiments\hidden_driver_config.json
+python synthetic_stability_experiments\hidden_driver_pipeline.py --config synthetic_stability_experiments\hidden_driver_config.json
 
 Full default run without large training_results.pkl files:
 
-python DCIts\examples\synthetic_stability_experiments\hidden_driver_pipeline.py --config DCIts\examples\synthetic_stability_experiments\hidden_driver_config.json --no-training-results
+python synthetic_stability_experiments\hidden_driver_pipeline.py --config synthetic_stability_experiments\hidden_driver_config.json --no-training-results
 
 Default settings come from hidden_driver_config.json:
 - A_values = 0.5, 1.0, 2.0
@@ -43,23 +41,23 @@ Default settings come from hidden_driver_config.json:
 
 Quick smoke test:
 
-python DCIts\examples\synthetic_stability_experiments\hidden_driver_pipeline.py --config DCIts\examples\synthetic_stability_experiments\hidden_driver_config.json --A-values 1.0 --P-values 200 --rho-values 0.3 --skip-control --n-runs 1 --ts-length 1000 --epochs 1 --output-dir "results/test_hidden_driver_single"
+python synthetic_stability_experiments\hidden_driver_pipeline.py --config synthetic_stability_experiments\hidden_driver_config.json --A-values 1.0 --P-values 200 --rho-values 0.3 --skip-control --n-runs 1 --ts-length 1000 --epochs 1 --output-dir "results/test_hidden_driver_single"
 
 Main sweeps used for the thesis:
 
-python DCIts\examples\synthetic_stability_experiments\hidden_driver_pipeline.py --config DCIts\examples\synthetic_stability_experiments\hidden_driver_config.json --A-values 0.5,1.0,2.0 --P-values 200 --rho-values 0.3 --skip-control
+python synthetic_stability_experiments\hidden_driver_pipeline.py --config synthetic_stability_experiments\hidden_driver_config.json --A-values 0.5,1.0,2.0 --P-values 200 --rho-values 0.3 --skip-control
 
-python DCIts\examples\synthetic_stability_experiments\hidden_driver_pipeline.py --config DCIts\examples\synthetic_stability_experiments\hidden_driver_config.json --A-values 1.0 --P-values 50,500 --rho-values 0.3 --skip-control
+python synthetic_stability_experiments\hidden_driver_pipeline.py --config synthetic_stability_experiments\hidden_driver_config.json --A-values 1.0 --P-values 50,500 --rho-values 0.3 --skip-control
 
-python DCIts\examples\synthetic_stability_experiments\hidden_driver_pipeline.py --config DCIts\examples\synthetic_stability_experiments\hidden_driver_config.json --A-values 1.0 --P-values 200 --rho-values 0.0,0.7 --skip-control
+python synthetic_stability_experiments\hidden_driver_pipeline.py --config synthetic_stability_experiments\hidden_driver_config.json --A-values 1.0 --P-values 200 --rho-values 0.0,0.7 --skip-control
 
 Control cases:
 
-python DCIts\examples\synthetic_stability_experiments\hidden_driver_pipeline.py --config DCIts\examples\synthetic_stability_experiments\hidden_driver_config.json --only-control --rho-values 0.0,0.3,0.7
+python synthetic_stability_experiments\hidden_driver_pipeline.py --config synthetic_stability_experiments\hidden_driver_config.json --only-control --rho-values 0.0,0.3,0.7
 
 Control with A=0, rho=0, and sigma_U=0:
 
-python DCIts\examples\synthetic_stability_experiments\hidden_driver_pipeline.py --config DCIts\examples\synthetic_stability_experiments\hidden_driver_config.json --output-dir "results/hidden_driver_no_U_control" --only-control --rho-values 0.0 --sigma-U 0.0
+python synthetic_stability_experiments\hidden_driver_pipeline.py --config synthetic_stability_experiments\hidden_driver_config.json --output-dir "results/hidden_driver_no_U_control" --only-control --rho-values 0.0 --sigma-U 0.0
 
 Main output layout:
 
@@ -93,11 +91,11 @@ TASK 2: REGIME CHANGE
 
 Full default run:
 
-python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json
+python synthetic_stability_experiments\regime_change_pipeline.py --config synthetic_stability_experiments\regime_change_config.json
 
 Full default run without large training_results.pkl files:
 
-python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json --no-training-results
+python synthetic_stability_experiments\regime_change_pipeline.py --config synthetic_stability_experiments\regime_change_config.json --no-training-results
 
 Default settings come from regime_change_config.json:
 - B_values = [25,75], [50,150], [100,300], [50,2000]
@@ -108,31 +106,31 @@ Default settings come from regime_change_config.json:
 
 Quick smoke test:
 
-python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json --B-values 50:150 --sigma-set-names high_snr --n-runs 1 --ts-length 1000 --epochs 1 --output-dir "results/test_regime_change_single"
+python synthetic_stability_experiments\regime_change_pipeline.py --config synthetic_stability_experiments\regime_change_config.json --B-values 50:150 --sigma-set-names high_snr --n-runs 1 --ts-length 1000 --epochs 1 --output-dir "results/test_regime_change_single"
 
 Run only high-SNR cases:
 
-python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json --sigma-set-names high_snr
+python synthetic_stability_experiments\regime_change_pipeline.py --config synthetic_stability_experiments\regime_change_config.json --sigma-set-names high_snr
 
 Run only low-SNR cases:
 
-python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json --sigma-set-names low_snr
+python synthetic_stability_experiments\regime_change_pipeline.py --config synthetic_stability_experiments\regime_change_config.json --sigma-set-names low_snr
 
 Run only PDF B values with high-SNR:
 
-python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json --B-values 25:75,50:150,100:300 --sigma-set-names high_snr
+python synthetic_stability_experiments\regime_change_pipeline.py --config synthetic_stability_experiments\regime_change_config.json --B-values 25:75,50:150,100:300 --sigma-set-names high_snr
 
 Run only long-regime case with high-SNR:
 
-python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json --B-values 50:2000 --sigma-set-names high_snr
+python synthetic_stability_experiments\regime_change_pipeline.py --config synthetic_stability_experiments\regime_change_config.json --B-values 50:2000 --sigma-set-names high_snr
 
 Run loss comparison on high-SNR:
 
-python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json --sigma-set-names high_snr --losses mse,huber,smooth_l1,mae
+python synthetic_stability_experiments\regime_change_pipeline.py --config synthetic_stability_experiments\regime_change_config.json --sigma-set-names high_snr --losses mse,huber,smooth_l1,mae
 
 Run longer training on high-SNR:
 
-python DCIts\examples\synthetic_stability_experiments\regime_change_pipeline.py --config DCIts\examples\synthetic_stability_experiments\regime_change_config.json --sigma-set-names high_snr --epochs 300 --scheduler-patience 10 --early-stopping-modifier 3
+python synthetic_stability_experiments\regime_change_pipeline.py --config synthetic_stability_experiments\regime_change_config.json --sigma-set-names high_snr --epochs 300 --scheduler-patience 10 --early-stopping-modifier 3
 
 Main output layout:
 
@@ -173,11 +171,11 @@ TASK 3: SMOOTHLY TIME-VARYING COEFFICIENT
 
 Full default run:
 
-python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json
+python synthetic_stability_experiments\smooth_coefficient_pipeline.py --config synthetic_stability_experiments\smooth_coefficient_config.json
 
 Full default run without large training_results.pkl files:
 
-python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json --no-training-results
+python synthetic_stability_experiments\smooth_coefficient_pipeline.py --config synthetic_stability_experiments\smooth_coefficient_config.json --no-training-results
 
 Default settings come from smooth_coefficient_config.json:
 - case_types = sinusoidal, monotonic_drift, gaussian_pulse, zero_crossing_sine
@@ -189,31 +187,31 @@ Default settings come from smooth_coefficient_config.json:
 
 Quick smoke test:
 
-python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json --output-dir "results/test_smooth_coefficient_single" --case-types sinusoidal --sigma-set-names high_snr --combo-limit 1 --n-runs 1 --ts-length 300 --epochs 1 --device cpu
+python synthetic_stability_experiments\smooth_coefficient_pipeline.py --config synthetic_stability_experiments\smooth_coefficient_config.json --output-dir "results/test_smooth_coefficient_single" --case-types sinusoidal --sigma-set-names high_snr --combo-limit 1 --n-runs 1 --ts-length 300 --epochs 1 --device cpu
 
 Run only high-SNR cases:
 
-python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json --sigma-set-names high_snr
+python synthetic_stability_experiments\smooth_coefficient_pipeline.py --config synthetic_stability_experiments\smooth_coefficient_config.json --sigma-set-names high_snr
 
 Run only low-SNR cases:
 
-python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json --sigma-set-names low_snr
+python synthetic_stability_experiments\smooth_coefficient_pipeline.py --config synthetic_stability_experiments\smooth_coefficient_config.json --sigma-set-names low_snr
 
 Run only sinusoidal cases with high-SNR:
 
-python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json --case-types sinusoidal --sigma-set-names high_snr
+python synthetic_stability_experiments\smooth_coefficient_pipeline.py --config synthetic_stability_experiments\smooth_coefficient_config.json --case-types sinusoidal --sigma-set-names high_snr
 
 Run only non-sinusoidal cases with high-SNR:
 
-python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json --case-types monotonic_drift,gaussian_pulse,zero_crossing_sine --sigma-set-names high_snr
+python synthetic_stability_experiments\smooth_coefficient_pipeline.py --config synthetic_stability_experiments\smooth_coefficient_config.json --case-types monotonic_drift,gaussian_pulse,zero_crossing_sine --sigma-set-names high_snr
 
 Run loss comparison on high-SNR:
 
-python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json --sigma-set-names high_snr --losses mse,huber,smooth_l1,mae
+python synthetic_stability_experiments\smooth_coefficient_pipeline.py --config synthetic_stability_experiments\smooth_coefficient_config.json --sigma-set-names high_snr --losses mse,huber,smooth_l1,mae
 
 Run longer training on high-SNR:
 
-python DCIts\examples\synthetic_stability_experiments\smooth_coefficient_pipeline.py --config DCIts\examples\synthetic_stability_experiments\smooth_coefficient_config.json --sigma-set-names high_snr --epochs 300 --scheduler-patience 10 --early-stopping-modifier 3
+python synthetic_stability_experiments\smooth_coefficient_pipeline.py --config synthetic_stability_experiments\smooth_coefficient_config.json --sigma-set-names high_snr --epochs 300 --scheduler-patience 10 --early-stopping-modifier 3
 
 Main output layout:
 

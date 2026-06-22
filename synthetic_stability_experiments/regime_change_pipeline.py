@@ -2,7 +2,6 @@ import argparse
 import gc
 import json
 import pickle
-import sys
 from pathlib import Path
 
 import matplotlib
@@ -21,8 +20,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from sklearn.tree import DecisionTreeClassifier
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+from _dcits_paths import configure_dcits_imports
+
+REPOSITORY_ROOT, DCITS_ROOT = configure_dcits_imports(__file__)
 
 from src.utils import calculate_multiple_run_statistics, collect_multiple_runs
 

@@ -73,16 +73,17 @@ python -m pip install jupyterlab notebook ipykernel
 
 PyTorch is not pinned because its CPU/CUDA build depends on the machine. Install the appropriate build from the [official PyTorch selector](https://pytorch.org/get-started/locally/). The synthetic pipelines choose CUDA when available and otherwise use the CPU; pass `--device cpu` to force CPU execution.
 
-## Synthetic Pipeline Requirement
+## Synthetic Pipelines
 
-Before running anything in `synthetic_stability_experiments/`, copy the experiment folder and its required DCIts utility support into the local DCIts checkout:
+Run the synthetic pipelines directly from this repository. They automatically load the local experiment-support utility module and locate a sibling `DCIts/` checkout at startup. Neither repository needs to be copied into or modified.
+
+For example, from the repository root:
 
 ```powershell
-Copy-Item -Recurse -Force .\Interpretable-Deep-Learning-Time-Series\synthetic_stability_experiments .\DCIts\examples\synthetic_stability_experiments
-Copy-Item -Force .\Interpretable-Deep-Learning-Time-Series\dcits_support\src\utils.py .\DCIts\src\utils.py
+python synthetic_stability_experiments\hidden_driver_pipeline.py --config synthetic_stability_experiments\hidden_driver_config.json
 ```
 
-This utility file extends the upstream helper interface with the per-window sequences and metrics used by the synthetic analyses. The Dataset 7 notebooks and bead-analysis workflow have their own setup instructions and do not use this copy step.
+See [synthetic_stability_experiments/run_commands.txt](synthetic_stability_experiments/run_commands.txt) for smoke tests, full runs, and targeted sweeps.
 
 ## Results and Reproduction
 

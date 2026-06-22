@@ -10,8 +10,8 @@ Each pipeline has a matching JSON configuration file and writes CSV summary tabl
 
 ## Run
 
-Follow the shared setup in the [repository README](../README.md), then copy this folder into `DCIts/examples/synthetic_stability_experiments/` and copy the accompanying DCIts utility support file as described there.
+Follow the shared setup in the [repository README](../README.md). Run the pipelines directly from this repository; they automatically locate the sibling `DCIts/` checkout and use the local experiment-support utility module.
 
-Run the commands in [run_commands.txt](run_commands.txt) from the shared `workspace/` directory. It includes smoke tests, full runs, targeted sweeps, and the expected output layouts.
+Run the commands in [run_commands.txt](run_commands.txt) from the repository root. It includes smoke tests, full runs, targeted sweeps, and the expected output layouts.
 
 Use `--no-training-results` to retain tables and figures while skipping the large `training_results.pkl` bundles.

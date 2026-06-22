@@ -2,7 +2,6 @@ import argparse
 import gc
 import json
 import pickle
-import sys
 from pathlib import Path
 
 import matplotlib
@@ -19,8 +18,9 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from statsmodels.tsa.api import VAR
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(REPO_ROOT))
+from _dcits_paths import configure_dcits_imports
+
+REPOSITORY_ROOT, DCITS_ROOT = configure_dcits_imports(__file__)
 
 from src.utils import calculate_multiple_run_statistics, collect_multiple_runs
 
