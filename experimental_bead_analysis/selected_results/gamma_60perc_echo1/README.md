@@ -1,6 +1,3 @@
 # Selected Figures
 
-
-## Figure Paths
-
-Deep generated result paths were flattened into `figures/` so Git on Windows can index the selected images without path-length errors.
+This folder contains representative figures for the 60% amplitude Echo 1 case, including the supervised analyses in its subdirectories.

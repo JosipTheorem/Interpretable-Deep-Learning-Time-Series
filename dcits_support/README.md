@@ -1,6 +1,6 @@
-# DCIts Support File
+# DCIts Utility Support
 
-Copy this file into a local DCIts clone before running the final thesis pipelines. From the parent workspace that contains both repositories, use:
+Copy this file into a local DCIts clone before running the synthetic stability pipelines. From the parent workspace that contains both repositories, use:
 
 ```powershell
 Copy-Item -Force .\Interpretable-Deep-Learning-Time-Series\dcits_support\src\utils.py .\DCIts\src\utils.py
@@ -8,4 +8,4 @@ Copy-Item -Force .\Interpretable-Deep-Learning-Time-Series\dcits_support\src\uti
 
 From inside this repository, adjust the destination path to point at your local `DCIts/src/utils.py`.
 
-This version of `utils.py` keeps the DCIts helper API but adds the sequence outputs and MAE values used by the analysis notebooks and pipelines.
+This version of `utils.py` keeps the DCIts helper API but adds per-window sequence outputs and MAE values used by the synthetic analyses. It replaces the corresponding file in the local DCIts checkout; record the upstream DCIts commit used for a reproducible run.

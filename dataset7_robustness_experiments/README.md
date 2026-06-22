@@ -1,39 +1,14 @@
 # Dataset 7 Robustness Experiments
 
-This folder contains the Dataset 7 experiments used as supporting material for the work on interpretable DCIts time-series models.
-
-These notebooks are separate from the later pipeline-based experiments in `synthetic_stability_experiments/`. They study how DCIts interpretations behave under:
+This folder contains notebooks that study how DCIts interpretations behave under:
 
 - increasing noise standard deviation;
 - missing values and simple imputation methods;
 - a piecewise change in the underlying dynamics.
 
-## Folder Layout
-
-```text
-dataset7_robustness_experiments/
-|-- notebooks/
-|   |-- noise_sigma/
-|   |   `-- noise_sigma_analysis.ipynb
-|   |-- missing_values_imputation/
-|   |   `-- missing_values_imputation_analysis.ipynb
-|   `-- dynamics_change/
-|       `-- dynamics_change_analysis.ipynb
-|-- support_utils/
-|   `-- src/
-|       |-- utils.py
-|       |-- utils_impute.py
-|       `-- utils_DynamicsChange.py
-|-- selected_figures/
-|-- seminar_report/
-|   `-- semJosipDujmenovic.pdf
-|-- REPRODUCTION_NOTES_FOR_CODEX.md
-`-- README.md
-```
-
 ## Running the Notebooks
 
-Use the same environment setup described in the repository root `README.md`. The original DCIts repository should be cloned next to this repository:
+Use the shared environment setup in the [repository README](../README.md). The original DCIts repository should be cloned next to this repository:
 
 ```text
 workspace/
@@ -41,7 +16,7 @@ workspace/
 `-- Interpretable-Deep-Learning-Time-Series/
 ```
 
-The notebooks can be run directly from this repository. They do not need to be copied into `DCIts/examples/`, and no `dcits_support` copy step is needed for these notebooks, because each notebook searches for both:
+The notebooks can run directly from this repository. They do not need to be copied into `DCIts/examples/`, and no `dcits_support` copy step is needed because each notebook searches for both:
 
 - `dataset7_robustness_experiments/support_utils/`; and
 - the nearby original `DCIts/src/dcits.py` source file.
@@ -64,7 +39,7 @@ Each notebook writes regenerated local outputs to an ignored `artifacts/` folder
 
 ## Selected Figures
 
-The `selected_figures/` folder contains a small curated subset of figures suitable for GitHub and thesis/report discussion. Full generated result folders and large training caches are intentionally not included.
+The `selected_figures/` folder contains a curated subset of figures. Full generated result folders and large training caches are intentionally not included.
 
 For dynamics-change heatmaps, use the corrected target-X3 figures:
 
@@ -72,18 +47,3 @@ For dynamics-change heatmaps, use the corrected target-X3 figures:
 selected_figures/dynamics_change/regime_A_target_X3_alpha_heatmap_corrected.*
 selected_figures/dynamics_change/regime_B_target_X3_alpha_heatmap_corrected.*
 ```
-
-## Reproduction Notes
-
-`REPRODUCTION_NOTES_FOR_CODEX.md` is a practical handoff file for future debugging/reproduction. It records:
-
-- original source notebook names;
-- support utility files;
-- old local cache paths;
-- selected figure names;
-- lag-axis conventions;
-- how to regenerate figures from cached `.pkl` files when available.
-
-## Seminar Report
-
-`seminar_report/semJosipDujmenovic.pdf` is the original seminar report connected to these experiments.
