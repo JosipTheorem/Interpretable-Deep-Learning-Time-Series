@@ -47,11 +47,9 @@ By default, generated outputs are written to:
 experimental_bead_analysis/artifacts/pipeline_results/
 ```
 
-That directory is ignored by git.
-
 ## Selected Results
 
-The selected results are intentionally compact and representative. They include:
+The selected results include:
 
 - cluster overview and time-series plots;
 - DCIts alpha heatmaps and shuffled controls;
@@ -64,5 +62,3 @@ The high-amplitude selected-result folder also contains two supervised analyses:
 
 - `supervised_abs_delta_y/`, where DCIts inputs predict `|delta raw_xy|`;
 - `supervised_event_Et/`, where DCIts inputs predict a binary event indicator.
-
-Those folders retain compact figures and notebook outputs for inspection.
