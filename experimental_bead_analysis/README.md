@@ -1,14 +1,14 @@
 # Experimental Bead-Tracking Echo Analysis
 
-This folder contains a DCIts analysis workflow for experimental particle-tracking echo data. It provides a command-line pipeline, a sample-data notebook, compact sample data, and representative figures.
+This folder contains a DCIts analysis workflow for experimental particle-tracking echo data. It provides a command-line pipeline, a sample-data notebook, a permitted compact experimental subset, and representative figures.
 
-The complete raw data set is external and is not included in this repository.
+The complete raw data set is external and is not included in this repository. The included `sample_data/` folder is a small 20-bead subset approved for use in this GitHub repository so the workflow can be run without private local data.
 
 ## Contents
 
 - `echo_analysis_pipeline.py` is the main command-line workflow.
 - `notebooks/multiple_run_one_echo_analysis.ipynb` demonstrates the workflow on the included sample data.
-- `sample_data/` contains two 10-bead, full-frame clusters: one 1% amplitude case and one 60% amplitude case.
+- `sample_data/` contains two permitted 10-bead, full-frame clusters: one 1% amplitude case and one 60% amplitude case.
 - `support_utils/src/` contains the data-loading, clustering, plotting, statistics, and DCIts training helpers.
 - `selected_results/` contains representative low- and high-amplitude Echo 1 figures.
 
