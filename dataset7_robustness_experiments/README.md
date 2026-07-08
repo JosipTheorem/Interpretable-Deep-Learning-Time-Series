@@ -16,11 +16,6 @@ workspace/
 `-- Interpretable-Deep-Learning-Time-Series/
 ```
 
-The notebooks can run directly from this repository. They do not need to be copied into `DCIts/examples/`, and no `dcits_support` copy step is needed because each notebook searches for both:
-
-- `dataset7_robustness_experiments/support_utils/`; and
-- the nearby original `DCIts/src/dcits.py` source file.
-
 For the cleanest artifact paths, start Jupyter from the notebook folder you want to run. For example:
 
 ```powershell
@@ -40,10 +35,3 @@ Each notebook writes regenerated local outputs to an ignored `artifacts/` folder
 ## Selected Figures
 
 The `selected_figures/` folder contains a curated subset of figures. Full generated result folders and large training caches are intentionally not included.
-
-For dynamics-change heatmaps, use the corrected target-X3 figures:
-
-```text
-selected_figures/dynamics_change/regime_A_target_X3_alpha_heatmap_corrected.*
-selected_figures/dynamics_change/regime_B_target_X3_alpha_heatmap_corrected.*
-```

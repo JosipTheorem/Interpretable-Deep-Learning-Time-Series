@@ -29,7 +29,7 @@ selected_results/                 Curated outputs from the synthetic pipelines
 dcits_support/                    DCIts utility support required by the synthetic pipelines
 ```
 
-Each experiment folder has its own README and command list where applicable. Detailed run options and output layouts are kept there rather than duplicated here.
+Each experiment folder has its own README and command list where applicable.
 
 ## Shared Setup
 
@@ -41,7 +41,7 @@ workspace/
 `-- Interpretable-Deep-Learning-Time-Series/
 ```
 
-From `workspace/`, clone the upstream project and this repository if needed:
+From `workspace/`, clone the upstream project and this repository:
 
 ```powershell
 git clone https://github.com/hc-xai/dcits.git DCIts
@@ -79,7 +79,7 @@ PyTorch is not pinned because its CPU/CUDA build depends on the machine. Install
 
 ## Synthetic Pipelines
 
-Run the synthetic pipelines directly from this repository. They automatically load the local experiment-support utility module and locate a sibling `DCIts/` checkout at startup. Neither repository needs to be copied into or modified.
+Run the synthetic pipelines directly from this repository.
 
 For example, from the repository root:
 
