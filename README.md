@@ -2,6 +2,12 @@
 
 This repository is a research companion for experiments with [DCIts](https://github.com/hc-xai/dcits), an interpretable deep-learning method for multivariate time series. It contains experiment code, configurations, notebooks, and curated results; it is not a standalone replacement for the upstream DCIts project.
 
+## Master's Thesis
+
+This repository accompanies my Master's thesis in Physics at the University of Zagreb (2026).
+
+**[Read the thesis — University of Zagreb Repository](https://repozitorij.unizg.hr/object/pmf:15654)**
+
 ## Purpose and Outputs
 
 The synthetic experiments test when DCIts local interpretation coefficients recover known dynamic relationships and when they reflect only predictive associations. The bead analysis applies the same approach to experimental particle trajectories; pipelines produce configuration records, CSV metrics, and PDF/PNG figures, with representative outputs tracked here.
